@@ -4,8 +4,8 @@ from flask import Flask, jsonify, app
 from flask_sqlalchemy.session import Session
 from werkzeug.security import generate_password_hash
 
-from schema import ma
-from database import db
+from application.schema import ma
+from application.database import db
 from models import *
 import datetime
 
@@ -15,6 +15,7 @@ from routes.orderBP import order_blueprint
 from routes.productBP import product_blueprint
 from routes.productionBP import production_blueprint
 from routes.userBP import user_blueprint
+
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -115,6 +116,8 @@ def init_users_data():
 
         db.session.add_all([user1, user2, user3])
     db.session.commit()
+
+my_app = create_app('DevelopmentConfig')
 
 if __name__ == "__main__":
     app = create_app('DevelopmentConfig')
