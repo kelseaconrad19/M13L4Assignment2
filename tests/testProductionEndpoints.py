@@ -1,16 +1,13 @@
-import services
 from application.app import my_app as app
 import pytest
-from unittest.mock import patch
-from flask import Response
-from services.productionServices import save, find_all, total_quantity_by_employee
+
 
 MOCK_PRODUCTION_DATA = [
         {
             "id": 1,
             "quantity": 100,
-            "product_id": 1,  # Assuming product_id 1 corresponds to a valid product in the Products table
-            "date_produced": "2024-09-01",  # Date in YYYY-MM-DD format
+            "product_id": 1,
+            "date_produced": "2024-09-01",
             "employees": [
                 {"id": 1, "name": "Alice Johnson", "position": "Manager"},
                 {"id": 2, "name": "Bob Williams", "position": "Worker"}

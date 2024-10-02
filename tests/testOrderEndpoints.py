@@ -15,7 +15,6 @@ class TestOrderAPI(unittest.TestCase):
         "date": "2024-09-30"
     }
 
-    # GET request to find all products
     @patch('requests.get')
     def test_1_find_order(self, mock_get):
         mock_orders = [
@@ -40,21 +39,16 @@ class TestOrderAPI(unittest.TestCase):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_orders
 
-        # Make the GET request to the /orders endpoint
         response = requests.get(self.ORDER_URL)
 
-        # Verify that the GET request was called once
         mock_get.assert_called_once_with(self.ORDER_URL)
 
-        # Verify that the status code is 200
         self.assertEqual(response.status_code, 200)
 
-        # Verify that the response data matches the mock_orders data
         self.assertEqual(response.json(), mock_orders)
 
     @patch('requests.post')
     def test_save_order(self, mock_post):
-        # Mock the response for a successful POST request
         mock_response = {
             "order_id": 1,
             "customer_id": self.ORDER_OBJ["customer_id"],
@@ -62,38 +56,28 @@ class TestOrderAPI(unittest.TestCase):
             "date": self.ORDER_OBJ["date"]
         }
 
-        # Configure the mock to return a status code of 201 (created) and mock response
         mock_post.return_value.status_code = 201
         mock_post.return_value.json.return_value = mock_response
 
-        # Simulate sending a POST request to save the order
         response = requests.post(self.ORDER_URL, json=self.ORDER_OBJ)
 
-        # Verify that the POST request was called once with the correct URL and payload
         mock_post.assert_called_once_with(self.ORDER_URL, json=self.ORDER_OBJ)
 
-        # Verify that the status code is 201 (created)
         self.assertEqual(response.status_code, 201)
 
-        # Verify that the response data matches the mock response
         self.assertEqual(response.json(), mock_response)
 
     @patch('requests.get')
     def test_find_no_orders(self, mock_get):
-        # Mock the GET request to return no orders
         mock_get.return_value.status_code = 200
-        mock_get.return_value.json.return_value = []  # Simulating no orders found
+        mock_get.return_value.json.return_value = []
 
-        # Make the GET request to the /orders endpoint
         response = requests.get(self.ORDER_URL)
 
-        # Verify that the GET request was called once
         mock_get.assert_called_once_with(self.ORDER_URL)
 
-        # Verify that the status code is 200
         self.assertEqual(response.status_code, 200)
 
-        # Verify that the response data is an empty list
         self.assertEqual(response.json(), [])
 
 
