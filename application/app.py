@@ -15,7 +15,18 @@ from routes.orderBP import order_blueprint
 from routes.productBP import product_blueprint
 from routes.productionBP import production_blueprint
 from routes.userBP import user_blueprint
+from flask_swagger_ui import get_swaggerui_blueprint
 
+SWAGGER_URL = '/api/docs'
+API_URL = '/static/swagger.yaml'
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "E Commerce API"
+    }
+)
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -92,6 +103,7 @@ def blueprint_config(app):
     app.register_blueprint(product_blueprint, url_prefix="/products")
     app.register_blueprint(production_blueprint, url_prefix="/production")
     app.register_blueprint(user_blueprint, url_prefix="/users")
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 def init_roles_data():
     with db.session.begin():

@@ -1,0 +1,88 @@
+swagger: '2.0'
+info:
+  title: 'E-commerce API'
+  description: 'This is an API to manage an E-commerce application.'
+  version: '1.0.0'
+host: '127.0.0.1:5000'
+schemes:
+  - 'http'
+consumes:
+  - 'application/json'
+produces:
+  - 'application/json'
+paths:
+  /accounts/login:
+    post:
+      tags:
+        - accounts
+      summary: "Login endpoint"
+      description: "Endpoint for user authentication."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Credentials for login"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginCredentials"
+      responses:
+        200:
+          description: "Login successful"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+  /customers:
+    get:
+      tags:
+        - customers
+      summary: "Get all Customers"
+      description: "Retrieve a list of all customers"
+      responses:
+        '200':
+          description: 'Successful response'
+          schema:
+            type: 'array'
+            items:
+              $ref: "#/definitions/Customer"
+definitions:
+  LoginCredentials:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "Username"
+      password:
+        type: "string"
+        format: "password"
+        description: "Password"
+    required:
+      - "username"
+      - "password"
+  LoginResponse:
+    type: "object"
+    properties:
+      auth_token:
+        type: "string"
+        description: "Authentication token"
+      message:
+        type: "string"
+        description: "Message indicating success or failure"
+      status:
+        type: "string"
+        description: "Status of the operation"
+    required:
+      - "auth_token"
+      - "message"
+  Customer:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Customer's phone number"
+      id:
+        type: "integer"
+        format: "int64"
+        description: "Customer's unique ID"
+    required:
+      - "name"
+      - "email"
+      - "phone"
+      - "id"
