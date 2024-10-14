@@ -35,7 +35,7 @@ jobs:
           echo "Contents of site-packages: $(ls -1 venv/lib/python*/site-packages)"
 
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
@@ -56,5 +56,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+
       - name: Run tests
-        run: python tests/testCustomerEndpoints.py
+        run: python -m unittest discover -s tests -p "*.py"
