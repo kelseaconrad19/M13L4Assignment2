@@ -2,7 +2,9 @@ name: Flask CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, feature/tests]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
   build:
